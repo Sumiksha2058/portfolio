@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Theme Mode | Sumiksha Neupane</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .settings-container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 40px;
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+        }
+
+        .theme-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .theme-card {
+            padding: 30px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .theme-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .theme-card.active {
+            border-color: var(--accent);
+            box-shadow: var(--shadow-inset);
+        }
+
+        .theme-card i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .theme-card h3 {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .back-btn {
+            margin-top: 3rem;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="settings-container">
+            <h1 class="section-title" style="margin-bottom: 1rem;">Settings</h1>
+            <p style="color: var(--text-secondary); font-weight: 600;">Customize your viewing experience</p>
+
+            <div class="theme-options">
+                <div class="theme-card" id="lightTheme" onclick="setTheme('light')">
+                    <i class="fas fa-sun"></i>
+                    <h3>Light Mode</h3>
+                </div>
+                <div class="theme-card" id="darkTheme" onclick="setTheme('dark')">
+                    <i class="fas fa-moon"></i>
+                    <h3>Dark Mode</h3>
+                </div>
+            </div>
+
+            <a href="../index.html" class="btn btn-secondary back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function setTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            localStorage.setItem('theme', theme);
+            updateActiveCard(theme);
+            
+            // Apply to all open tabs if needed (optional)
+            window.dispatchEvent(new Event('storage'));
+        }
+
+        function updateActiveCard(theme) {
+            document.getElementById('lightTheme').classList.remove('active');
+            document.getElementById('darkTheme').classList.remove('active');
+            
+            if (theme === 'dark') {
+                document.getElementById('darkTheme').classList.add('active');
+            } else {
+                document.getElementById('lightTheme').classList.add('active');
+            }
+        }
+
+        // Initialize
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateActiveCard(savedTheme);
+    </script>
+</body>
+</html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wood Calculator - Scientific</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background: #2c1b0e url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .calculator {
+            background: #5d4037;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.3);
+            border: 10px solid #3e2723;
+            width: 500px;
+        }
+        .display-container {
+            background: #9e9d24;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+            border: 4px solid #3e2723;
+        }
+        .secondary-display {
+            color: #33691e;
+            text-align: right;
+            font-size: 1rem;
+            min-height: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .main-display {
+            color: #1b5e20;
+            text-align: right;
+            font-size: 2.2rem;
+            min-height: 3rem;
+            font-weight: bold;
+            overflow: hidden;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+        button {
+            padding: 15px 5px;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #8d6e63;
+            color: #fff;
+            box-shadow: 0 4px #3e2723;
+            transition: all 0.1s;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        button:active {
+            box-shadow: 0 2px #3e2723;
+            transform: translateY(2px);
+        }
+        .operator {
+            background: #6d4c41;
+        }
+        .function {
+            background: #795548;
+            font-size: 0.9rem;
+        }
+        .equals {
+            background: #4e342e;
+            grid-column: span 2;
+        }
+        .clear {
+            background: #bf360c;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #5d4037;
+            color: #f3e5ab;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 2px solid #3e2723;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="calculator">
+        <div class="display-container">
+            <div class="secondary-display" id="secondary-display"></div>
+            <div class="main-display" id="display">0</div>
+        </div>
+        <div class="buttons">
+            <button class="function" onclick="mathFunc('sin')">sin</button>
+            <button class="function" onclick="mathFunc('cos')">cos</button>
+            <button class="function" onclick="mathFunc('tan')">tan</button>
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="deleteLast()">DEL</button>
+            
+            <button class="function" onclick="mathFunc('log')">log</button>
+            <button class="function" onclick="mathFunc('ln')">ln</button>
+            <button class="function" onclick="mathFunc('sqrt')">√</button>
+            <button class="function" onclick="appendToDisplay('**')">^</button>
+            <button class="operator" onclick="appendToDisplay('/')">/</button>
+            
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="function" onclick="appendToDisplay('Math.PI')">π</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+            
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="function" onclick="appendToDisplay('(')">(</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button class="function" onclick="appendToDisplay(')')">)</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="function" onclick="mathFunc('exp')">exp</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let secondaryDisplay = document.getElementById('secondary-display');
+        let currentInput = '0';
+
+        function appendToDisplay(value) {
+            if (currentInput === '0' && value !== '.' && !isNaN(value)) {
+                currentInput = value;
+            } else {
+                currentInput += value;
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentInput = '0';
+            secondaryDisplay.innerText = '';
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            currentInput = currentInput.toString().slice(0, -1);
+            if (currentInput === '') currentInput = '0';
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            let viewInput = currentInput.toString()
+                .replace(/\*\*/g, '^')
+                .replace(/Math\.PI/g, 'π')
+                .replace(/Math\./g, '');
+            display.innerText = viewInput;
+        }
+
+        function mathFunc(func) {
+            try {
+                let val = eval(currentInput);
+                let result;
+                switch(func) {
+                    case 'sin': result = Math.sin(val); break;
+                    case 'cos': result = Math.cos(val); break;
+                    case 'tan': result = Math.tan(val); break;
+                    case 'log': result = Math.log10(val); break;
+                    case 'ln': result = Math.log(val); break;
+                    case 'sqrt': result = Math.sqrt(val); break;
+                    case 'exp': result = Math.exp(val); break;
+                }
+                secondaryDisplay.innerText = func + '(' + currentInput + ')';
+                currentInput = result.toString();
+                updateDisplay();
+            } catch (e) {
+                display.innerText = 'Error';
+                currentInput = '0';
+            }
+        }
+
+        function calculate() {
+            try {
+                secondaryDisplay.innerText = currentInput + ' =';
+                currentInput = eval(currentInput).toString();
+                updateDisplay();
+            } catch (e) {
+                display.innerText = 'Error';
+                currentInput = '0';
+            }
+        }
+    </script>
+</body>
+</html>

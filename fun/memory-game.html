@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game - Test Your Brain</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #e0e5ec;
+            --bg-secondary: #f0f4f8;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --accent: #667eea;
+            --accent-light: #764ba2;
+            --shadow-sm: 2px 2px 5px #b8b9be, -3px -3px 7px #ffffff;
+            --shadow-md: 4px 4px 10px #b8b9be, -5px -5px 15px #ffffff;
+            --shadow-inset: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0e5ec 0%, #f0f4f8 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-primary);
+        }
+
+        .container {
+            background: var(--bg-secondary);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            padding: 15px 25px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow-inset);
+        }
+
+        .stat-item { text-align: center; }
+        .stat-label { font-size: 0.7rem; text-transform: uppercase; color: var(--text-secondary); font-weight: 700; display: block; }
+        .stat-value { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
+
+        .grid-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .number-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .number-btn {
+            aspect-ratio: 1;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--bg-secondary);
+            color: var(--accent);
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .number-btn.hidden {
+            box-shadow: var(--shadow-inset);
+            color: transparent;
+            cursor: default;
+        }
+
+        .input-group { margin-bottom: 25px; }
+        .input-group label { display: block; margin-bottom: 10px; font-weight: 700; color: var(--text-secondary); }
+        
+        input {
+            width: 100%;
+            padding: 15px;
+            background: var(--bg-secondary);
+            border: none;
+            border-radius: 15px;
+            box-shadow: var(--shadow-inset);
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: 5px;
+            outline: none;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover:not(:disabled) { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(224, 229, 236, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            border-radius: 20px;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 15px;
+            font-weight: 700;
+            display: none;
+        }
+
+        .message.success { display: block; color: #38a169; box-shadow: var(--shadow-sm); }
+        .message.error { display: block; color: #e53e3e; box-shadow: var(--shadow-sm); }
+
+        .hidden-element { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+        
+        <h1>Memory Game</h1>
+        <p class="subtitle">Test your brain power</p>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <span class="stat-label">Progress</span>
+                <span class="stat-value" id="progress">0/9</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Time</span>
+                <span class="stat-value" id="timer">0.0s</span>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <div class="number-grid" id="gameGrid"></div>
+            <div id="startOverlay" class="overlay">
+                <button class="btn btn-primary" onclick="startGame()">
+                    <i class="fas fa-play"></i> Start Game
+                </button>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="userInput">Recall the sequence:</label>
+            <input type="text" id="userInput" placeholder="---------" maxlength="9" autocomplete="off" disabled>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="checkBtn" onclick="checkAnswer()" disabled>Check Answer</button>
+            <button class="btn btn-secondary" onclick="resetGame()">Reset</button>
+        </div>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <!-- Audio Elements -->
+    <audio id="clickSound" src="../assets/sounds/click.mp3"></audio>
+    <audio id="matchSound" src="../assets/sounds/match.mp3"></audio>
+    <audio id="winSound" src="../assets/sounds/win.mp3"></audio>
+    <audio id="lossSound" src="../assets/sounds/loss.mp3"></audio>
+
+    <script>
+        let numbers = [];
+        let gameActive = false;
+
+        // Sound effect function
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            if (sound) {
+                sound.currentTime = 0;
+                sound.play().catch(e => console.log('Sound play failed:', e));
+            }
+        }    let timerInterval;
+        let gameActive = false;
+
+        const gameGrid = document.getElementById('gameGrid');
+        const progressEl = document.getElementById('progress');
+        const timerEl = document.getElementById('timer');
+        const userInput = document.getElementById('userInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const messageEl = document.getElementById('message');
+        const startOverlay = document.getElementById('startOverlay');
+
+        function initGrid() {
+            gameGrid.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const div = document.createElement('div');
+                div.className = 'number-btn hidden';
+                gameGrid.appendChild(div);
+            }
+        }
+
+        function startGame() {
+            playSound('clickSound');
+            startOverlay.classList.add('hidden-element');
+            gameActive = true;
+            numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5);
+            
+            gameGrid.innerHTML = '';
+            numbers.forEach((num) => {
+                const btn = document.createElement('div');
+                btn.className = 'number-btn';
+                btn.textContent = num;
+                gameGrid.appendChild(btn);
+            });
+
+            startTime = Date.now();
+            timerInterval = setInterval(() => {
+                timerEl.textContent = ((Date.now() - startTime) / 1000).toFixed(1) + 's';
+            }, 100);
+
+            setTimeout(() => {
+                document.querySelectorAll('.number-btn').forEach(btn => btn.classList.add('hidden'));
+                userInput.disabled = false;
+                checkBtn.disabled = false;
+                userInput.focus();
+            }, 3000);
+        }
+
+        function checkAnswer() {
+            const answer = userInput.value;
+            const correctAnswer = numbers.join('');
+            
+            clearInterval(timerInterval);
+            gameActive = false;
+            userInput.disabled = true;
+            checkBtn.disabled = true;
+
+            if (answer === correctAnswer) {
+                playSound('winSound');
+                messageEl.textContent = "🎉 Perfect! Your memory is amazing!";
+                messageEl.className = "message success";
+                progressEl.textContent = "9/9";
+            } else {
+                playSound('lossSound');
+                let correctCount = 0;
+                for(let i=0; i<answer.length; i++) {
+                    if(answer[i] === correctAnswer[i]) correctCount++;
+                }
+                messageEl.textContent = `😢 Not quite. You got ${correctCount} correct.`;
+                messageEl.className = "message error";
+                progressEl.textContent = `${correctCount}/9`;
+            }
+            
+            document.querySelectorAll('.number-btn').forEach(btn => btn.classList.remove('hidden'));
+        }
+
+        function resetGame() {
+            clearInterval(timerInterval);
+            gameActive = false;
+            userInput.value = '';
+            userInput.disabled = true;
+            checkBtn.disabled = true;
+            timerEl.textContent = '0.0s';
+            progressEl.textContent = '0/9';
+            messageEl.style.display = 'none';
+            startOverlay.classList.remove('hidden-element');
+            initGrid();
+        }
+
+        initGrid();
+    </script>
+</body>
+</html>

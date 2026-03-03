@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wood Calculator - General</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            background: #2c1b0e url('https://www.transparenttextures.com/patterns/wood-pattern.png');
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .calculator {
+            background: #5d4037;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), inset 0 0 20px rgba(0,0,0,0.3);
+            border: 10px solid #3e2723;
+            width: 350px;
+        }
+        .display {
+            background: #9e9d24;
+            color: #1b5e20;
+            padding: 20px;
+            text-align: right;
+            font-size: 2.5rem;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 5px 10px rgba(0,0,0,0.5);
+            border: 4px solid #3e2723;
+            min-height: 80px;
+            overflow: hidden;
+            font-weight: bold;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        button {
+            padding: 20px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #8d6e63;
+            color: #fff;
+            box-shadow: 0 5px #3e2723;
+            transition: all 0.1s;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        button:active {
+            box-shadow: 0 2px #3e2723;
+            transform: translateY(3px);
+        }
+        .operator {
+            background: #6d4c41;
+        }
+        .equals {
+            background: #4e342e;
+            grid-column: span 2;
+        }
+        .clear {
+            background: #bf360c;
+            grid-column: span 2;
+        }
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: #5d4037;
+            color: #f3e5ab;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            border: 2px solid #3e2723;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="calculator">
+        <div class="display" id="display">0</div>
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="deleteLast()">DEL</button>
+            <button class="operator" onclick="appendToDisplay('/')">/</button>
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            <button onclick="appendToDisplay('0')">0</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            <button class="equals" onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        let display = document.getElementById('display');
+        let currentInput = '0';
+
+        function appendToDisplay(value) {
+            if (currentInput === '0' && value !== '.') {
+                currentInput = value;
+            } else {
+                currentInput += value;
+            }
+            updateDisplay();
+        }
+
+        function clearDisplay() {
+            currentInput = '0';
+            updateDisplay();
+        }
+
+        function deleteLast() {
+            currentInput = currentInput.slice(0, -1);
+            if (currentInput === '') currentInput = '0';
+            updateDisplay();
+        }
+
+        function updateDisplay() {
+            display.innerText = currentInput;
+        }
+
+        function calculate() {
+            try {
+                // Using a safer alternative to eval for simple arithmetic
+                currentInput = Function('"use strict";return (' + currentInput + ')')().toString();
+                updateDisplay();
+            } catch (e) {
+                display.innerText = 'Error';
+                currentInput = '0';
+            }
+        }
+    </script>
+</body>
+</html>

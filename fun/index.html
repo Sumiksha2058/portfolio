@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fun Zone - Games & Projects</title>
+    <script src="../theme-manager.js"></script>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .back-link-container {
+            margin-bottom: 30px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 50px;
+        }
+
+        .game-card {
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .game-icon {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            padding: 50px;
+            text-align: center;
+            font-size: 3.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-content {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .game-content h2 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .game-content p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex: 1;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="back-link-container">
+            <a href="../index.html" class="btn btn-secondary"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        </div>
+        
+        <div class="header">
+            <h1><i class="fas fa-gamepad"></i> Fun Zone</h1>
+            <p>Play games and explore interactive projects</p>
+        </div>
+
+        <div class="games-grid">
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-calculator"></i></div>
+                <div class="game-content">
+                    <h2>Calculator</h2>
+                    <p>Perform calculations with both general and scientific modes. Features a beautiful wood-themed design with Easy, Medium, and Hard difficulty levels.</p>
+                    <a href="calculator/index.html" class="btn btn-primary">Open Calculator <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-chess"></i></div>
+                <div class="game-content">
+                    <h2>Budhhi Chal</h2>
+                    <p>A classic strategy game. Play against the computer with three difficulty levels or challenge a friend in local multiplayer mode.</p>
+                    <a href="budhhi-chal/index.html" class="btn btn-primary">Play Game <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-dice"></i></div>
+                <div class="game-content">
+                    <h2>Dice Game</h2>
+                    <p>Roll the dice and test your luck. A fun and simple game to pass the time and enjoy some quick entertainment.</p>
+                    <a href="dice-game.html" class="btn btn-primary">Play Game <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-quote-left"></i></div>
+                <div class="game-content">
+                    <h2>Quote Generator</h2>
+                    <p>Get inspired with random quotes. Perfect for motivation and daily inspiration whenever you need it.</p>
+                    <a href="quote-generator.html" class="btn btn-primary">Generate Quote <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <div class="game-card">
+                <div class="game-icon"><i class="fas fa-brain"></i></div>
+                <div class="game-content">
+                    <h2>Memory Game</h2>
+                    <p>Test your memory by matching pairs. A classic game that challenges your concentration and recall abilities.</p>
+                    <a href="memory-game.html" class="btn btn-primary">Play Game <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

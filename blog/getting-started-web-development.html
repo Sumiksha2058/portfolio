@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with Web Development</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-primary: #e0e5ec;
+            --bg-secondary: #f0f4f8;
+            --text-primary: #2d3748;
+            --text-secondary: #718096;
+            --accent: #667eea;
+            --accent-light: #764ba2;
+            --shadow-sm: 2px 2px 5px #b8b9be, -3px -3px 7px #ffffff;
+            --shadow-md: 4px 4px 10px #b8b9be, -5px -5px 15px #ffffff;
+            --shadow-inset: inset 2px 2px 5px #b8b9be, inset -3px -3px 7px #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0e5ec 0%, #f0f4f8 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            color: var(--text-primary);
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: var(--bg-secondary);
+            color: var(--accent);
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .article-header {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: white;
+            padding: 3.5rem 3rem;
+            border-radius: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .article-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .article-meta {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-weight: 600;
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .article-content {
+            background: var(--bg-secondary);
+            padding: 3.5rem;
+            border-radius: 30px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .article-content h2 {
+            color: var(--accent);
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .article-content h3 {
+            color: var(--text-primary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: var(--text-secondary);
+        }
+
+        .article-content ul, .article-content ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-secondary);
+        }
+
+        .article-content li {
+            margin-bottom: 0.8rem;
+            font-weight: 500;
+        }
+
+        .code-block {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-inset);
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: rgba(102, 126, 234, 0.1);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+
+        .article-footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .tags {
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .share-btn {
+            width: 45px;
+            height: 45px;
+            background: var(--bg-secondary);
+            color: var(--accent);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+            color: var(--accent-light);
+        }
+
+        @media (max-width: 768px) {
+            .article-header { padding: 2.5rem 2rem; }
+            .article-header h1 { font-size: 2rem; }
+            .article-content { padding: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Blog</a>
+        
+        <div class="article-header">
+            <h1>Getting Started with Web Development</h1>
+            <div class="article-meta">
+                <span><i class="far fa-calendar"></i> Jan 10, 2025</span>
+                <span><i class="far fa-user"></i> Sumiksha Neupane</span>
+                <span><i class="far fa-clock"></i> 5 min read</span>
+            </div>
+        </div>
+
+        <div class="article-content">
+            <p>Web development is an exciting field that combines creativity with technical skills. Whether you're interested in building websites, web applications, or interactive experiences, this guide will help you get started on your journey.</p>
+
+            <h2>What is Web Development?</h2>
+            <p>Web development is the process of building and maintaining websites and web applications. It involves three main technologies:</p>
+            <ul>
+                <li><span class="highlight">HTML</span> - Structure and content</li>
+                <li><span class="highlight">CSS</span> - Styling and layout</li>
+                <li><span class="highlight">JavaScript</span> - Interactivity and functionality</li>
+            </ul>
+
+            <h2>Getting Started: The Basics</h2>
+
+            <h3>1. Learn HTML</h3>
+            <p>HTML (HyperText Markup Language) is the foundation of web development. It provides the structure and content of web pages.</p>
+            <div class="code-block">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My First Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello, World!&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+            </div>
+
+            <h3>2. Master CSS</h3>
+            <p>CSS (Cascading Style Sheets) is used to style and layout web pages. Learn how to use selectors, properties, and values to make your websites look beautiful.</p>
+            <div class="code-block">
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #e0e5ec;
+  color: #2d3748;
+}
+
+h1 {
+  color: #667eea;
+  text-shadow: 2px 2px 5px #b8b9be;
+}
+            </div>
+
+            <h3>3. JavaScript for Interactivity</h3>
+            <p>JavaScript brings your websites to life by adding interactivity. Learn the basics of variables, functions, and events.</p>
+            <div class="code-block">
+function greet(name) {
+  return "Hello, " + name + "!";
+}
+
+console.log(greet("Sumiksha"));
+            </div>
+
+            <h2>Essential Tools</h2>
+            <ul>
+                <li><span class="highlight">Code Editor</span> - VS Code is the industry standard.</li>
+                <li><span class="highlight">Browser DevTools</span> - Essential for debugging.</li>
+                <li><span class="highlight">Version Control</span> - Git and GitHub for tracking changes.</li>
+            </ul>
+
+            <div class="article-footer">
+                <div class="tags">
+                    <i class="fas fa-tags"></i> WebDev, HTML, CSS, JS
+                </div>
+                <div class="share-buttons">
+                    <a href="#" class="share-btn"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="share-btn"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="share-btn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
