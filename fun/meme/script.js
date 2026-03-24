@@ -1,83 +1,84 @@
-// Nepali Meme Creator Script
+// Nepali Meme Creator Script with Bilingual Support
 
-// Category-based suggestions
+// Category-based suggestions (English and Nepali)
 const categorySuggestions = {
     general: [
-        { top: "मेरो सपना", bottom: "वास्तविकता" },
-        { top: "जब मेरो नम्बर आउछ", bottom: "परीक्षामा" },
-        { top: "मेरो प्रिय विषय", bottom: "परीक्षा" },
-        { top: "जब सोमबार आता", bottom: "मेरो जीवन" },
-        { top: "मेरो लक्ष्य", bottom: "मेरो वास्तविकता" }
+        { top_en: "My dream", bottom_en: "Reality", top_ne: "मेरो सपना", bottom_ne: "वास्तविकता" },
+        { top_en: "When my number is called", bottom_en: "In exam", top_ne: "जब मेरो नम्बर आउछ", bottom_ne: "परीक्षामा" },
+        { top_en: "My favorite subject", bottom_en: "Exam", top_ne: "मेरो प्रिय विषय", bottom_ne: "परीक्षा" },
+        { top_en: "When Monday comes", bottom_en: "My life", top_ne: "जब सोमबार आता", bottom_ne: "मेरो जीवन" },
+        { top_en: "My goal", bottom_en: "My reality", top_ne: "मेरो लक्ष्य", bottom_ne: "मेरो वास्तविकता" }
     ],
     politics: [
-        { top: "जब राजनीतिज्ञ बोल्छन्", bottom: "मेरो प्रतिक्रिया" },
-        { top: "चुनाव अभियान", bottom: "वास्तविकता" },
-        { top: "राजनीतिक वादा", bottom: "कार्यान्वयन" },
-        { top: "सरकारी योजना", bottom: "जनताको अनुभव" },
-        { top: "राजनीतिक बहस", bottom: "कहिले पनि समाधान" }
+        { top_en: "When politicians speak", bottom_en: "My reaction", top_ne: "जब राजनीतिज्ञ बोल्छन्", bottom_ne: "मेरो प्रतिक्रिया" },
+        { top_en: "Election campaign", bottom_en: "Reality", top_ne: "चुनाव अभियान", bottom_ne: "वास्तविकता" },
+        { top_en: "Political promises", bottom_en: "Implementation", top_ne: "राजनीतिक वादा", bottom_ne: "कार्यान्वयन" },
+        { top_en: "Government scheme", bottom_en: "People's experience", top_ne: "सरकारी योजना", bottom_ne: "जनताको अनुभव" },
+        { top_en: "Political debate", bottom_en: "Never solution", top_ne: "राजनीतिक बहस", bottom_ne: "कहिले पनि समाधान" }
     ],
     celebrity: [
-        { top: "सेलिब्रिटीको जीवन", bottom: "वास्तविकता" },
-        { top: "सोशल मिडिया", bottom: "वास्तविक जीवन" },
-        { top: "सेलिब्रिटी फ्यान्स", bottom: "आलोचकहरू" },
-        { top: "फिल्मी ड्रामा", bottom: "वास्तविक समस्या" },
-        { top: "सेलिब्रिटी स्टाइल", bottom: "मेरो बजेट" }
+        { top_en: "Celebrity's life", bottom_en: "Reality", top_ne: "सेलिब्रिटीको जीवन", bottom_ne: "वास्तविकता" },
+        { top_en: "Social media", bottom_en: "Real life", top_ne: "सोशल मिडिया", bottom_ne: "वास्तविक जीवन" },
+        { top_en: "Celebrity fans", bottom_en: "Critics", top_ne: "सेलिब्रिटी फ्यान्स", bottom_ne: "आलोचकहरू" },
+        { top_en: "Movie drama", bottom_en: "Real problems", top_ne: "फिल्मी ड्रामा", bottom_ne: "वास्तविक समस्या" },
+        { top_en: "Celebrity style", bottom_en: "My budget", top_ne: "सेलिब्रिटी स्टाइल", bottom_ne: "मेरो बजेट" }
     ],
     sports: [
-        { top: "खेल समाचार", bottom: "मेरो प्रतिक्रिया" },
-        { top: "मेरो टीम जित्छ", bottom: "मेरो टीम हार्छ" },
-        { top: "क्रिकेट विश्लेषक", bottom: "वास्तविक खेल" },
-        { top: "खेल अभिनेता", bottom: "वास्तविक खेलाडी" },
-        { top: "मेरो पसंदको टीम", bottom: "अन्य सबै" }
+        { top_en: "Sports news", bottom_en: "My reaction", top_ne: "खेल समाचार", bottom_ne: "मेरो प्रतिक्रिया" },
+        { top_en: "My team wins", bottom_en: "My team loses", top_ne: "मेरो टीम जित्छ", bottom_ne: "मेरो टीम हार्छ" },
+        { top_en: "Cricket analyst", bottom_en: "Real game", top_ne: "क्रिकेट विश्लेषक", bottom_ne: "वास्तविक खेल" },
+        { top_en: "Sports actor", bottom_en: "Real player", top_ne: "खेल अभिनेता", bottom_ne: "वास्तविक खेलाडी" },
+        { top_en: "My favorite team", bottom_en: "Everyone else", top_ne: "मेरो पसंदको टीम", bottom_ne: "अन्य सबै" }
     ],
     tech: [
-        { top: "कोडिङ गर्दा", bottom: "त्रुटि आउछ" },
-        { top: "मेरो कोड", bottom: "उत्पादनमा" },
-        { top: "प्रोग्रामर जीवन", bottom: "वास्तविकता" },
-        { top: "नयाँ प्रविधि", bottom: "मेरो कम्प्यूटर" },
-        { top: "डिबग गर्दा", bottom: "समस्या बढ्छ" }
+        { top_en: "When coding", bottom_en: "Error appears", top_ne: "कोडिङ गर्दा", bottom_ne: "त्रुटि आउछ" },
+        { top_en: "My code", bottom_en: "In production", top_ne: "मेरो कोड", bottom_ne: "उत्पादनमा" },
+        { top_en: "Programmer life", bottom_en: "Reality", top_ne: "प्रोग्रामर जीवन", bottom_ne: "वास्तविकता" },
+        { top_en: "New technology", bottom_en: "My computer", top_ne: "नयाँ प्रविधि", bottom_ne: "मेरो कम्प्यूटर" },
+        { top_en: "Debugging", bottom_en: "Problem increases", top_ne: "डिबग गर्दा", bottom_ne: "समस्या बढ्छ" }
     ],
     education: [
-        { top: "परीक्षा अघि", bottom: "परीक्षामा" },
-        { top: "शिक्षक को व्याख्यान", bottom: "मेरो ध्यान" },
-        { top: "पढाई गर्दा", bottom: "सोशल मिडिया" },
-        { top: "परीक्षा परिणाम", bottom: "माता-पिताको प्रतिक्रिया" },
-        { top: "होमवर्क समय", bottom: "खेल्ने समय" }
+        { top_en: "Before exam", bottom_en: "During exam", top_ne: "परीक्षा अघि", bottom_ne: "परीक्षामा" },
+        { top_en: "Teacher's lecture", bottom_en: "My attention", top_ne: "शिक्षक को व्याख्यान", bottom_ne: "मेरो ध्यान" },
+        { top_en: "Studying", bottom_en: "Social media", top_ne: "पढाई गर्दा", bottom_ne: "सोशल मिडिया" },
+        { top_en: "Exam result", bottom_en: "Parent's reaction", top_ne: "परीक्षा परिणाम", bottom_ne: "माता-पिताको प्रतिक्रिया" },
+        { top_en: "Homework time", bottom_en: "Play time", top_ne: "होमवर्क समय", bottom_ne: "खेल्ने समय" }
     ],
     relationship: [
-        { top: "सम्बन्धको सुरु", bottom: "अब" },
-        { top: "प्रेमी को वादा", bottom: "वास्तविकता" },
-        { top: "मेरो प्रेमी", bottom: "मेरी सहेली को प्रेमी" },
-        { top: "प्रेमपत्र लेख्दा", bottom: "भेट्टिएर" },
-        { top: "लम्बी दूरी को सम्बन्ध", bottom: "वास्तविकता" }
+        { top_en: "Relationship start", bottom_en: "Now", top_ne: "सम्बन्धको सुरु", bottom_ne: "अब" },
+        { top_en: "Boyfriend's promise", bottom_en: "Reality", top_ne: "प्रेमी को वादा", bottom_ne: "वास्तविकता" },
+        { top_en: "My boyfriend", bottom_en: "My friend's boyfriend", top_ne: "मेरो प्रेमी", bottom_ne: "मेरी सहेली को प्रेमी" },
+        { top_en: "Writing love letter", bottom_en: "Meeting", top_ne: "प्रेमपत्र लेख्दा", bottom_ne: "भेट्टिएर" },
+        { top_en: "Long distance love", bottom_en: "Reality", top_ne: "लम्बी दूरी को सम्बन्ध", bottom_ne: "वास्तविकता" }
     ],
     work: [
-        { top: "काम सुरु गर्दा", bottom: "अब" },
-        { top: "बस को समय", bottom: "काम को समय" },
-        { top: "बस को समय", bottom: "घर फर्किएर" },
-        { top: "कार्यालय मिटिङ", bottom: "मेरो ध्यान" },
-        { top: "सोमबार काम", bottom: "शुक्रबार काम" }
+        { top_en: "Starting work", bottom_en: "Now", top_ne: "काम सुरु गर्दा", bottom_ne: "अब" },
+        { top_en: "Bus time", bottom_en: "Work time", top_ne: "बस को समय", bottom_ne: "काम को समय" },
+        { top_en: "Bus time", bottom_en: "Coming home", top_ne: "बस को समय", bottom_ne: "घर फर्किएर" },
+        { top_en: "Office meeting", bottom_en: "My attention", top_ne: "कार्यालय मिटिङ", bottom_ne: "मेरो ध्यान" },
+        { top_en: "Monday work", bottom_en: "Friday work", top_ne: "सोमबार काम", bottom_ne: "शुक्रबार काम" }
     ],
     travel: [
-        { top: "यात्रा गर्दा", bottom: "वास्तविकता" },
-        { top: "यात्रा योजना", bottom: "वास्तविक यात्रा" },
-        { top: "नयाँ ठाउँ", bottom: "मेरो फोटो" },
-        { top: "यात्रा बजेट", bottom: "वास्तविक खर्च" },
-        { top: "यात्रा को सपना", bottom: "वास्तविकता" }
+        { top_en: "When traveling", bottom_en: "Reality", top_ne: "यात्रा गर्दा", bottom_ne: "वास्तविकता" },
+        { top_en: "Travel plan", bottom_en: "Real travel", top_ne: "यात्रा योजना", bottom_ne: "वास्तविक यात्रा" },
+        { top_en: "New place", bottom_en: "My photo", top_ne: "नयाँ ठाउँ", bottom_ne: "मेरो फोटो" },
+        { top_en: "Travel budget", bottom_en: "Real expense", top_ne: "यात्रा बजेट", bottom_ne: "वास्तविक खर्च" },
+        { top_en: "Travel dream", bottom_en: "Reality", top_ne: "यात्रा को सपना", bottom_ne: "वास्तविकता" }
     ],
     food: [
-        { top: "रेस्टुरेन्टको तस्विर", bottom: "वास्तविक खाना" },
-        { top: "खाना अर्डर गर्दा", bottom: "आउछ" },
-        { top: "मेरो पसंदको खाना", bottom: "मेरो बजेट" },
-        { top: "खाना बनाउँदा", bottom: "वास्तविक परिणाम" },
-        { top: "रेसिपी भिडियो", bottom: "मेरो खाना" }
+        { top_en: "Restaurant photo", bottom_en: "Real food", top_ne: "रेस्टुरेन्टको तस्विर", bottom_ne: "वास्तविक खाना" },
+        { top_en: "Ordering food", bottom_en: "What arrives", top_ne: "खाना अर्डर गर्दा", bottom_ne: "आउछ" },
+        { top_en: "My favorite food", bottom_en: "My budget", top_ne: "मेरो पसंदको खाना", bottom_ne: "मेरो बजेट" },
+        { top_en: "Cooking food", bottom_en: "Real result", top_ne: "खाना बनाउँदा", bottom_ne: "वास्तविक परिणाम" },
+        { top_en: "Recipe video", bottom_en: "My food", top_ne: "रेसिपी भिडियो", bottom_ne: "मेरो खाना" }
     ]
 };
 
 // Meme templates
 const memeTemplates = {
     drake: {
-        name: "ड्रेक मेम",
+        name_en: "Drake Meme",
+        name_ne: "ड्रेक मेम",
         width: 500,
         height: 500,
         draw: (ctx, topText, bottomText, bgColor, textColor, fontSize) => {
@@ -98,7 +99,8 @@ const memeTemplates = {
         }
     },
     distracted: {
-        name: "विचलित प्रेमी",
+        name_en: "Distracted Boyfriend",
+        name_ne: "विचलित प्रेमी",
         width: 500,
         height: 500,
         draw: (ctx, topText, bottomText, bgColor, textColor, fontSize) => {
@@ -119,7 +121,8 @@ const memeTemplates = {
         }
     },
     success: {
-        name: "सफलता बालक",
+        name_en: "Success Kid",
+        name_ne: "सफलता बालक",
         width: 500,
         height: 500,
         draw: (ctx, topText, bottomText, bgColor, textColor, fontSize) => {
@@ -138,7 +141,8 @@ const memeTemplates = {
         }
     },
     expanding: {
-        name: "विस्तारित दिमाग",
+        name_en: "Expanding Brain",
+        name_ne: "विस्तारित दिमाग",
         width: 500,
         height: 500,
         draw: (ctx, topText, bottomText, bgColor, textColor, fontSize) => {
@@ -164,7 +168,8 @@ const memeTemplates = {
         }
     },
     nepali_humor: {
-        name: "नेपाली हास्य",
+        name_en: "Nepali Humor",
+        name_ne: "नेपाली हास्य",
         width: 500,
         height: 500,
         draw: (ctx, topText, bottomText, bgColor, textColor, fontSize) => {
@@ -241,7 +246,7 @@ const memeGallery = document.getElementById("memeGallery");
 const clearGalleryBtn = document.getElementById("clearGalleryBtn");
 const categoryBtns = document.querySelectorAll(".category-btn");
 const emojiButtons = document.querySelectorAll(".emoji-btn");
-const useSuggestionBtns = document.querySelectorAll(".use-btn");
+const suggestionsGrid = document.getElementById("suggestionsGrid");
 
 let currentCategory = "general";
 let memeGalleryArray = [];
@@ -250,6 +255,7 @@ let memeGalleryArray = [];
 document.addEventListener("DOMContentLoaded", () => {
     updateSuggestions();
     loadGalleryFromStorage();
+    populateQuickSuggestions();
 });
 
 // Category filter
@@ -262,7 +268,7 @@ categoryBtns.forEach(btn => {
     });
 });
 
-// Update suggestions based on category
+// Update suggestions based on category and language
 function updateSuggestions() {
     const suggestions = categorySuggestions[currentCategory] || categorySuggestions.general;
     suggestionsList.innerHTML = "";
@@ -270,15 +276,46 @@ function updateSuggestions() {
     suggestions.forEach(suggestion => {
         const div = document.createElement("div");
         div.className = "suggestion-item";
+        const topText = currentLanguage === 'en' ? suggestion.top_en : suggestion.top_ne;
+        const bottomText = currentLanguage === 'en' ? suggestion.bottom_en : suggestion.bottom_ne;
         div.innerHTML = `
-            <p>"${suggestion.top}" - "${suggestion.bottom}"</p>
+            <p>"${topText}" - "${bottomText}"</p>
         `;
         div.addEventListener("click", () => {
-            topTextInput.value = suggestion.top;
-            bottomTextInput.value = suggestion.bottom;
+            topTextInput.value = topText;
+            bottomTextInput.value = bottomText;
             generateMeme();
         });
         suggestionsList.appendChild(div);
+    });
+}
+
+// Populate quick suggestions grid
+function populateQuickSuggestions() {
+    const suggestions = categorySuggestions.general.slice(0, 6);
+    suggestionsGrid.innerHTML = "";
+
+    suggestions.forEach(suggestion => {
+        const topText = currentLanguage === 'en' ? suggestion.top_en : suggestion.top_ne;
+        const bottomText = currentLanguage === 'en' ? suggestion.bottom_en : suggestion.bottom_ne;
+        const card = document.createElement("div");
+        card.className = "suggestion-card";
+        card.innerHTML = `
+            <p class="suggestion-text">"${topText}"</p>
+            <button class="use-btn" data-top="${topText}" data-bottom="${bottomText}">
+                <i class="fas fa-check"></i> ${currentLanguage === 'en' ? 'Use' : 'प्रयोग गर्नुहोस्'}
+            </button>
+        `;
+        suggestionsGrid.appendChild(card);
+    });
+
+    // Add event listeners to use buttons
+    document.querySelectorAll('.use-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            topTextInput.value = btn.dataset.top;
+            bottomTextInput.value = btn.dataset.bottom;
+            generateMeme();
+        });
     });
 }
 
@@ -287,14 +324,6 @@ emojiButtons.forEach(btn => {
     btn.addEventListener("click", () => {
         const emoji = btn.dataset.emoji;
         topTextInput.value += emoji;
-    });
-});
-
-// Use suggestion buttons
-useSuggestionBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        const text = btn.dataset.text;
-        topTextInput.value = text;
     });
 });
 
@@ -387,7 +416,7 @@ copyBtn.addEventListener("click", () => {
             navigator.clipboard.write([
                 new ClipboardItem({ "image/png": blob })
             ]).then(() => {
-                alert("मेम क्लिपबोर्डमा कपी गरियो!");
+                alert(t("Meme copied to clipboard!"));
             });
         });
     }
@@ -401,12 +430,12 @@ shareBtn.addEventListener("click", () => {
             const file = new File([blob], "meme.png", { type: "image/png" });
             navigator.share({
                 files: [file],
-                title: "नेपाली मेम",
-                text: "मेरो बनाएको मेम हेर्नुहोस्!"
+                title: currentLanguage === 'en' ? "Meme" : "मेम",
+                text: currentLanguage === 'en' ? "Check out my meme!" : "मेरो बनाएको मेम हेर्नुहोस्!"
             });
         });
     } else {
-        alert("तपाईंको ब्राउजरले साझेदारी समर्थन गर्दैन।");
+        alert(t("Your browser doesn't support sharing."));
     }
 });
 
@@ -417,7 +446,7 @@ resetBtn.addEventListener("click", () => {
     memePreview.innerHTML = `
         <div class="meme-placeholder">
             <i class="fas fa-image"></i>
-            <p>तपाईंको मेम यहाँ देखिनेछ</p>
+            <p>${currentLanguage === 'en' ? 'Your meme will appear here' : 'तपाईंको मेम यहाँ देखिनेछ'}</p>
         </div>
     `;
     downloadBtn.disabled = true;
@@ -427,10 +456,10 @@ resetBtn.addEventListener("click", () => {
 
 // Clear gallery
 clearGalleryBtn.addEventListener("click", () => {
-    if (confirm("के तपाई सबै मेमहरू हटाउन निश्चित हुनुहुन्छ?")) {
+    if (confirm(t("Are you sure you want to delete all memes?"))) {
         memeGallery.innerHTML = `
             <div class="gallery-placeholder">
-                <p>तपाईंले बनाएका मेमहरू यहाँ देखिनेछन्</p>
+                <p>${currentLanguage === 'en' ? 'Your created memes will appear here' : 'तपाईंले बनाएका मेमहरू यहाँ देखिनेछन्'}</p>
             </div>
         `;
         memeGalleryArray = [];
@@ -476,3 +505,9 @@ function loadGalleryFromStorage() {
         }
     }
 }
+
+// Listen for language changes
+document.addEventListener('languageChanged', () => {
+    updateSuggestions();
+    populateQuickSuggestions();
+});
