@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Under Construction</title>
+    <script src="theme-manager.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .error-container {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-icon {
+            font-size: 8rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .error-code {
+            font-size: 4rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .construction-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-sm);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand"><i class="fas fa-code"></i> Sumiksha Neupane</div>
+            <ul class="nav-menu">
+                <li><a href="index.html#home" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#about" class="nav-link"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="fun/index.html" class="nav-link"><i class="fas fa-gamepad"></i> Fun</a></li>
+                <li><a href="blog/index.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="error-container">
+            <div class="error-icon">
+                <i class="fas fa-tools"></i>
+            </div>
+            <div class="construction-tag">Under Construction</div>
+            <h1 class="error-code">404</h1>
+            <p class="error-message">Oops! The page you are looking for is currently under development. I'm working hard to bring you more content soon!</p>
+            <div class="hero-buttons">
+                <a href="index.html" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
+                <a href="blog/index.html" class="btn btn-secondary"><i class="fas fa-blog"></i> Back to Blog</a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; <script>document.write(new Date().getFullYear());</script> Sumiksha Neupane. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
