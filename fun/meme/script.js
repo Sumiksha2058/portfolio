@@ -511,3 +511,65 @@ document.addEventListener('languageChanged', () => {
     updateSuggestions();
     populateQuickSuggestions();
 });
+
+
+// Mobile Optimization
+function optimizeForMobile() {
+    const isMobile = window.innerWidth <= 768;
+    
+    if (isMobile) {
+        document.body.classList.add('touch-device');
+        
+        // Improve touch targets for better mobile experience
+        document.querySelectorAll('.btn, .emoji-btn, .category-btn').forEach(btn => {
+            btn.style.minHeight = '44px';
+            btn.style.minWidth = '44px';
+        });
+    } else {
+        document.body.classList.remove('touch-device');
+    }
+}
+
+// Handle window resize for responsive adjustments
+window.addEventListener('resize', () => {
+    optimizeForMobile();
+});
+
+// Prevent zoom on input focus (iOS)
+document.addEventListener('touchstart', function() {}, false);
+
+// Smooth scrolling for mobile browsers
+if ('scrollBehavior' in document.documentElement.style === false) {
+    document.addEventListener('click', function(e) {
+        if (e.target.tagName === 'A' && e.target.hash) {
+            e.preventDefault();
+            const target = document.querySelector(e.target.hash);
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
+}
+
+// Optimize canvas rendering for mobile
+function optimizeCanvasForMobile() {
+    const canvas = memePreview.querySelector('canvas');
+    if (canvas && window.innerWidth <= 768) {
+        const maxWidth = Math.min(canvas.width, window.innerWidth - 40);
+        const scale = maxWidth / canvas.width;
+        canvas.style.maxWidth = maxWidth + 'px';
+        canvas.style.height = 'auto';
+    }
+}
+
+// Call mobile optimization on page load
+document.addEventListener('DOMContentLoaded', () => {
+    optimizeForMobile();
+});
+
+// Optimize canvas when meme is generated
+const originalGenerateMeme = generateMeme;
+generateMeme = function() {
+    originalGenerateMeme.call(this);
+    optimizeCanvasForMobile();
+};
