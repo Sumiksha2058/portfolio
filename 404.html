@@ -5,43 +5,90 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Under Construction</title>
     <script src="theme-manager.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        [data-theme="dark"] {
+            color-scheme: dark;
+        }
+    </style>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="container">
-            <div class="nav-brand"><i class="fas fa-code"></i> Sumiksha Neupane</div>
-            <ul class="nav-menu">
-                <li><a href="index.html#home" class="nav-link"><i class="fas fa-home"></i> Home</a></li>
-                <li><a href="index.html#about" class="nav-link"><i class="fas fa-user"></i> About</a></li>
-                <li><a href="fun/index.html" class="nav-link"><i class="fas fa-gamepad"></i> Fun</a></li>
-                <li><a href="blog/index.html" class="nav-link"><i class="fas fa-blog"></i> Blog</a></li>
+<body class="bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-gradient-to-r from-slate-100 to-slate-200 dark:from-slate-900 dark:to-slate-800 shadow-lg">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-purple-600 dark:text-purple-400 flex items-center gap-2">
+                <i class="fas fa-code"></i> Sumiksha Neupane
+            </div>
+            <ul class="hidden md:flex gap-8">
+                <li><a href="index.html#home" class="hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="index.html#about" class="hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold"><i class="fas fa-user"></i> About</a></li>
+                <li><a href="fun/index.html" class="hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold"><i class="fas fa-gamepad"></i> Fun</a></li>
+                <li><a href="blog/index.html" class="hover:text-purple-600 dark:hover:text-purple-400 transition-colors font-semibold"><i class="fas fa-blog"></i> Blog</a></li>
             </ul>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="error-container">
-            <div class="error-icon">
-                <i class="fas fa-tools"></i>
+    <!-- Error Container -->
+    <div class="min-h-screen flex items-center justify-center px-4 py-12">
+        <div class="text-center max-w-2xl">
+            <!-- Error Icon -->
+            <div class="mb-8">
+                <div class="inline-block text-8xl text-purple-600 dark:text-purple-400 float-animation">
+                    <i class="fas fa-tools"></i>
+                </div>
             </div>
-            <div class="construction-tag">Under Construction</div>
-            <h1 class="error-code">404</h1>
-            <p class="error-message">Oops! The page you are looking for is currently under development. I'm working hard to bring you more content soon!</p>
-            <div class="hero-buttons">
-                <a href="index.html" class="btn btn-primary"><i class="fas fa-home"></i> Back to Home</a>
-                <a href="blog/index.html" class="btn btn-secondary"><i class="fas fa-blog"></i> Back to Blog</a>
+
+            <!-- Construction Tag -->
+            <div class="inline-block mb-6 px-6 py-3 bg-gradient-to-r from-yellow-400 to-orange-400 text-white font-bold text-sm uppercase rounded-full shadow-lg transform hover:scale-105 transition-transform">
+                <i class="fas fa-hammer"></i> Under Construction
+            </div>
+
+            <!-- Error Code -->
+            <h1 class="text-7xl md:text-8xl font-black text-slate-900 dark:text-slate-100 mb-4">404</h1>
+
+            <!-- Error Message -->
+            <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                Oops! The page you are looking for is currently under development. I'm working hard to bring you more content soon!
+            </p>
+
+            <!-- Action Buttons -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+                <a href="index.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-home"></i> Back to Home
+                </a>
+                <a href="blog/index.html" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-900 dark:text-slate-100 font-bold rounded-xl shadow-lg transform hover:scale-105 transition-all duration-300">
+                    <i class="fas fa-blog"></i> Back to Blog
+                </a>
+            </div>
+
+            <!-- Decorative Elements -->
+            <div class="grid grid-cols-3 gap-4 mt-12 opacity-50">
+                <div class="h-24 bg-gradient-to-br from-purple-300 to-purple-400 dark:from-purple-600 dark:to-purple-700 rounded-2xl"></div>
+                <div class="h-24 bg-gradient-to-br from-blue-300 to-blue-400 dark:from-blue-600 dark:to-blue-700 rounded-2xl"></div>
+                <div class="h-24 bg-gradient-to-br from-pink-300 to-pink-400 dark:from-pink-600 dark:to-pink-700 rounded-2xl"></div>
             </div>
         </div>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-bottom">
-                <p>&copy; <script>document.write(new Date().getFullYear());</script> Sumiksha Neupane. All rights reserved.</p>
-            </div>
+    <!-- Footer -->
+    <footer class="bg-gradient-to-r from-slate-800 to-slate-900 text-white py-8 mt-12">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <p class="text-slate-400">&copy; <span id="year"></span> Sumiksha Neupane. All rights reserved.</p>
         </div>
     </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
