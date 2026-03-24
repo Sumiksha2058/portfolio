@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>नेपाली मेम क्रिएटर - सुमिक्षाको मजेदार जोन</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand"><i class="fas fa-code"></i> Sumiksha Neupane</div>
+            <ul class="nav-menu">
+                <li><a href="../../index.html#home" class="nav-link"><i class="fas fa-home"></i> गृह</a></li>
+                <li><a href="../../index.html#about" class="nav-link"><i class="fas fa-user"></i> बारे</a></li>
+                <li><a href="../../index.html#education" class="nav-link"><i class="fas fa-graduation-cap"></i> शिक्षा</a></li>
+                <li><a href="../index.html" class="nav-link"><i class="fas fa-gamepad"></i> मजेदार</a></li>
+                <li><a href="../../blog/index.html" class="nav-link"><i class="fas fa-blog"></i> ब्लग</a></li>
+                <li><a href="../../index.html#contact" class="nav-link"><i class="fas fa-envelope"></i> सम्पर्क</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="meme-creator-section">
+        <div class="container">
+            <h1 class="page-title"><i class="fas fa-laugh-squint"></i> नेपाली मेम क्रिएटर</h1>
+            <p class="page-subtitle">AI द्वारा उत्पन्न पाठ, इमोजी र GIF को साथ हास्य मेम बनाउनुहोस्!</p>
+
+            <!-- Category Filter -->
+            <div class="category-filter">
+                <h3><i class="fas fa-filter"></i> मेम क्याटेगरी छान्नुहोस्</h3>
+                <div class="category-buttons">
+                    <button class="category-btn active" data-category="general"><i class="fas fa-laugh"></i> सामान्य</button>
+                    <button class="category-btn" data-category="politics"><i class="fas fa-landmark"></i> राजनीति</button>
+                    <button class="category-btn" data-category="celebrity"><i class="fas fa-star"></i> सेलिब्रिटी</button>
+                    <button class="category-btn" data-category="sports"><i class="fas fa-football-ball"></i> खेलकुद</button>
+                    <button class="category-btn" data-category="tech"><i class="fas fa-laptop"></i> प्रविधि</button>
+                    <button class="category-btn" data-category="education"><i class="fas fa-graduation-cap"></i> शिक्षा</button>
+                    <button class="category-btn" data-category="relationship"><i class="fas fa-heart"></i> सम्बन्ध</button>
+                    <button class="category-btn" data-category="work"><i class="fas fa-briefcase"></i> काम</button>
+                    <button class="category-btn" data-category="travel"><i class="fas fa-plane"></i> यात्रा</button>
+                    <button class="category-btn" data-category="food"><i class="fas fa-utensils"></i> खाना</button>
+                </div>
+            </div>
+
+            <div class="meme-container">
+                <!-- Input Panel -->
+                <div class="input-panel">
+                    <h2><i class="fas fa-pen-fancy"></i> मेम जेनरेटर</h2>
+                    
+                    <div class="form-group">
+                        <label for="topText"><i class="fas fa-heading"></i> माथिको पाठ</label>
+                        <input type="text" id="topText" placeholder="माथिको पाठ लेख्नुहोस्..." maxlength="100">
+                        <small>अधिकतम १०० वर्ण</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="bottomText"><i class="fas fa-heading"></i> तलको पाठ</label>
+                        <input type="text" id="bottomText" placeholder="तलको पाठ लेख्नुहोस्..." maxlength="100">
+                        <small>अधिकतम १०० वर्ण</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="memeTemplate"><i class="fas fa-image"></i> मेम टेम्प्लेट</label>
+                        <select id="memeTemplate">
+                            <option value="drake">ड्रेक मेम</option>
+                            <option value="distracted">विचलित प्रेमी</option>
+                            <option value="success">सफलता बालक</option>
+                            <option value="expanding">विस्तारित दिमाग</option>
+                            <option value="nepali-humor">नेपाली हास्य</option>
+                            <option value="exam-stress">परीक्षा तनाव</option>
+                            <option value="monsoon">वर्षा मौसम</option>
+                            <option value="traffic">ट्राफिक जाम</option>
+                            <option value="loss">नोक्सान</option>
+                            <option value="waiting">प्रतीक्षा गर्दै</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emojiInput"><i class="fas fa-smile"></i> इमोजी थप्नुहोस्</label>
+                        <div class="emoji-picker">
+                            <button type="button" class="emoji-btn" data-emoji="😂">😂</button>
+                            <button type="button" class="emoji-btn" data-emoji="🤣">🤣</button>
+                            <button type="button" class="emoji-btn" data-emoji="😆">😆</button>
+                            <button type="button" class="emoji-btn" data-emoji="😅">😅</button>
+                            <button type="button" class="emoji-btn" data-emoji="🤪">🤪</button>
+                            <button type="button" class="emoji-btn" data-emoji="😎">😎</button>
+                            <button type="button" class="emoji-btn" data-emoji="🔥">🔥</button>
+                            <button type="button" class="emoji-btn" data-emoji="💯">💯</button>
+                            <button type="button" class="emoji-btn" data-emoji="🎉">🎉</button>
+                            <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
+                            <button type="button" class="emoji-btn" data-emoji="👍">👍</button>
+                            <button type="button" class="emoji-btn" data-emoji="💪">💪</button>
+                            <button type="button" class="emoji-btn" data-emoji="🙏">🙏</button>
+                            <button type="button" class="emoji-btn" data-emoji="😤">😤</button>
+                            <button type="button" class="emoji-btn" data-emoji="🤦">🤦</button>
+                            <button type="button" class="emoji-btn" data-emoji="😭">😭</button>
+                            <button type="button" class="emoji-btn" data-emoji="🤐">🤐</button>
+                            <button type="button" class="emoji-btn" data-emoji="😏">😏</button>
+                            <button type="button" class="emoji-btn" data-emoji="🤨">🤨</button>
+                            <button type="button" class="emoji-btn" data-emoji="😡">😡</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="gifUrl"><i class="fas fa-film"></i> GIF URL थप्नुहोस्</label>
+                        <input type="text" id="gifUrl" placeholder="Giphy.com बाट GIF URL पेस्ट गर्नुहोस्...">
+                        <small>Giphy.com मा GIF खोज्नुहोस्</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="backgroundColor"><i class="fas fa-palette"></i> पृष्ठभूमि रंग</label>
+                        <input type="color" id="backgroundColor" value="#ffffff">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="textColor"><i class="fas fa-font"></i> पाठ रंग</label>
+                        <input type="color" id="textColor" value="#000000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fontSize"><i class="fas fa-text-height"></i> फन्ट साइज</label>
+                        <input type="range" id="fontSize" min="12" max="48" value="24">
+                        <small>वर्तमान: <span id="fontSizeValue">24</span>px</small>
+                    </div>
+
+                    <div class="button-group">
+                        <button id="generateBtn" class="btn btn-primary"><i class="fas fa-magic"></i> मेम बनाउनुहोस्</button>
+                        <button id="resetBtn" class="btn btn-secondary"><i class="fas fa-redo"></i> रिसेट गर्नुहोस्</button>
+                    </div>
+                </div>
+
+                <!-- Preview Panel -->
+                <div class="preview-panel">
+                    <h2><i class="fas fa-eye"></i> पूर्वावलोकन</h2>
+                    <div id="memePreview" class="meme-preview">
+                        <div class="meme-placeholder">
+                            <i class="fas fa-image"></i>
+                            <p>तपाईंको मेम यहाँ देखिनेछ</p>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="downloadBtn" class="btn btn-primary" disabled><i class="fas fa-download"></i> डाउनलोड गर्नुहोस्</button>
+                        <button id="shareBtn" class="btn btn-secondary" disabled><i class="fas fa-share-alt"></i> साझेदारी गर्नुहोस्</button>
+                        <button id="copyBtn" class="btn btn-secondary" disabled><i class="fas fa-copy"></i> कपी गर्नुहोस्</button>
+                    </div>
+
+                    <div id="aiSuggestions" class="ai-suggestions">
+                        <h3><i class="fas fa-lightbulb"></i> AI सुझाव</h3>
+                        <div id="suggestionsList" class="suggestions-list">
+                            <p>मेम बनाउन फारम भर्नुहोस्!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Suggestions Section -->
+            <div class="quick-suggestions">
+                <h2><i class="fas fa-fire"></i> लोकप्रिय मेम लाइनहरू</h2>
+                <div class="suggestions-grid">
+                    <div class="suggestion-card">
+                        <p class="suggestion-text">"मेरो प्रिय विषय: परीक्षा"</p>
+                        <button class="use-btn" data-text="मेरो प्रिय विषय: परीक्षा"><i class="fas fa-check"></i> प्रयोग गर्नुहोस्</button>
+                    </div>
+                    <div class="suggestion-card">
+                        <p class="suggestion-text">"जब सोमबार आता..."</p>
+                        <button class="use-btn" data-text="जब सोमबार आता..."><i class="fas fa-check"></i> प्रयोग गर्नुहोस्</button>
+                    </div>
+                    <div class="suggestion-card">
+                        <p class="suggestion-text">"मामा को फोन कल"</p>
+                        <button class="use-btn" data-text="मामा को फोन कल"><i class="fas fa-check"></i> प्रयोग गर्नुहोस्</button>
+                    </div>
+                    <div class="suggestion-card">
+                        <p class="suggestion-text">"जब बाबु घर आउछन्"</p>
+                        <button class="use-btn" data-text="जब बाबु घर आउछन्"><i class="fas fa-check"></i> प्रयोग गर्नुहोस्</button>
+                    </div>
+                    <div class="suggestion-card">
+                        <p class="suggestion-text">"मेरो सपना vs वास्तविकता"</p>
+                        <button class="use-btn" data-text="मेरो सपना vs वास्तविकता"><i class="fas fa-check"></i> प्रयोग गर्नुहोस्</button>
+                    </div>
+                    <div class="suggestion-card">
+                        <p class="suggestion-text">"जब मेरो नम्बर आउछ"</p>
+                        <button class="use-btn" data-text="जब मेरो नम्बर आउछ"><i class="fas fa-check"></i> प्रयोग गर्नुहोस्</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Section -->
+            <div class="gallery-section">
+                <h2><i class="fas fa-images"></i> मेम ग्यालरी</h2>
+                <div class="gallery-controls">
+                    <button id="clearGalleryBtn" class="btn btn-secondary"><i class="fas fa-trash"></i> ग्यालरी खाली गर्नुहोस्</button>
+                </div>
+                <div id="memeGallery" class="meme-gallery">
+                    <div class="gallery-placeholder">
+                        <p>तपाईंले बनाएका मेमहरू यहाँ देखिनेछन्</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="tips-section">
+                <h2><i class="fas fa-lightbulb"></i> मेम बनाउने सुझाव</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>सरल र स्पष्ट पाठ</h4>
+                        <p>छोटो र प्रभावशाली पाठ सबैभन्दा राम्रो काम गर्छ।</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>सही टेम्प्लेट छान्नुहोस्</h4>
+                        <p>आपनो हास्य शैलीसँग मिल्ने टेम्प्लेट प्रयोग गर्नुहोस्।</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>इमोजी जोड्नुहोस्</h4>
+                        <p>इमोजीले मेमको प्रभाव बढाउन सक्छ।</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>रंग संयोजन</h4>
+                        <p>पाठ र पृष्ठभूमि रंग सुसंगत राख्नुहोस्।</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3><i class="fas fa-code"></i> Sumiksha Neupane</h3>
+                    <p>BCA विद्यार्थी र वेब डेभलपर</p>
+                </div>
+                <div class="footer-links">
+                    <h4>द्रुत लिङ्क</h4>
+                    <ul>
+                        <li><a href="../../index.html#home">गृह</a></li>
+                        <li><a href="../../index.html#about">बारे</a></li>
+                        <li><a href="../index.html">मजेदार जोन</a></li>
+                        <li><a href="../../blog/index.html">ब्लग</a></li>
+                    </ul>
+                </div>
+                <div class="footer-social">
+                    <h4>मसँग जोडिनुहोस्</h4>
+                    <div class="social-icons">
+                        <a href="https://github.com/Sumiksha2058" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/sumiksha-neupane2058" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; <script>document.write(new Date().getFullYear());</script> Sumiksha Neupane. सबै अधिकार सुरक्षित।</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../../script.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
