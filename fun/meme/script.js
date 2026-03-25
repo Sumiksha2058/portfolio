@@ -573,3 +573,211 @@ generateMeme = function() {
     originalGenerateMeme.call(this);
     optimizeCanvasForMobile();
 };
+
+
+// ===== TRENDING MEME DISPLAY SECTION =====
+
+// DOM Elements for Trending Section
+const trendingMemesGrid = document.getElementById('trendingMemesGrid');
+const refreshTrendingBtn = document.getElementById('refreshTrendingBtn');
+const autoPlayBtn = document.getElementById('autoPlayBtn');
+const topTrendName = document.getElementById('topTrendName');
+const memesCount = document.getElementById('memesCount');
+const categoriesCount = document.getElementById('categoriesCount');
+
+let autoPlayInterval = null;
+let isAutoPlaying = false;
+
+// Initialize trending memes on page load
+document.addEventListener('DOMContentLoaded', () => {
+    displayTrendingMemes();
+    updateTrendingStats();
+});
+
+// Display trending memes
+function displayTrendingMemes() {
+    const trendingMemes = trendingMemeGen.generateBatch(6);
+    
+    trendingMemesGrid.innerHTML = '';
+    
+    trendingMemes.forEach((meme, index) => {
+        const memeCard = createTrendingMemeCard(meme, index);
+        trendingMemesGrid.appendChild(memeCard);
+    });
+}
+
+// Create trending meme card
+function createTrendingMemeCard(meme, index) {
+    const card = document.createElement('div');
+    card.className = 'trending-meme-card';
+    card.style.animationDelay = `${index * 0.1}s`;
+    
+    const canvas = document.createElement('canvas');
+    canvas.width = 300;
+    canvas.height = 300;
+    
+    const ctx = canvas.getContext('2d');
+    const templateConfig = memeTemplates[meme.template] || memeTemplates.drake;
+    
+    // Scale down for card display
+    const scaledWidth = 300;
+    const scaledHeight = 300;
+    canvas.width = scaledWidth;
+    canvas.height = scaledHeight;
+    
+    // Draw meme
+    ctx.fillStyle = '#f0f0f0';
+    ctx.fillRect(0, 0, scaledWidth, scaledHeight);
+    
+    // Draw text
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold 16px Arial';
+    ctx.textAlign = 'center';
+    ctx.fillText(meme.topText, scaledWidth / 2, 50);
+    ctx.fillText(meme.bottomText, scaledWidth / 2, scaledHeight - 30);
+    
+    // Add emoji
+    ctx.font = '40px Arial';
+    ctx.fillText(meme.emoji, scaledWidth / 2, scaledHeight / 2);
+    
+    const cardHTML = `
+        <div class="trending-card-header">
+            <span class="trend-title">${meme.title}</span>
+            <span class="trend-score">
+                <i class="fas fa-fire"></i> ${meme.trendScore}
+            </span>
+        </div>
+        <div class="trending-card-image">
+            ${canvas.outerHTML}
+        </div>
+        <div class="trending-card-content">
+            <p class="trending-text">"${meme.topText}"</p>
+            <p class="trending-text">"${meme.bottomText}"</p>
+            <div class="trending-card-actions">
+                <button class="btn-small use-trending" data-top="${meme.topText}" data-bottom="${meme.bottomText}">
+                    <i class="fas fa-check"></i> ${currentLanguage === 'en' ? 'Use' : 'प्रयोग गर्नुहोस्'}
+                </button>
+                <button class="btn-small download-trending">
+                    <i class="fas fa-download"></i> ${currentLanguage === 'en' ? 'Save' : 'बचाउनुहोस्'}
+                </button>
+            </div>
+        </div>
+    `;
+    
+    card.innerHTML = cardHTML;
+    
+    // Add event listeners
+    const useBtn = card.querySelector('.use-trending');
+    const downloadBtn = card.querySelector('.download-trending');
+    
+    useBtn.addEventListener('click', () => {
+        topTextInput.value = meme.topText;
+        bottomTextInput.value = meme.bottomText;
+        memeTemplateSelect.value = meme.template;
+        generateMeme();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    
+    downloadBtn.addEventListener('click', () => {
+        downloadImage(canvas.toDataURL());
+    });
+    
+    return card;
+}
+
+// Update trending stats
+function updateTrendingStats() {
+    const stats = trendingMemeGen.getStats();
+    const topTrending = trendingMemeGen.getTopTrending(1)[0];
+    
+    topTrendName.textContent = topTrending ? topTrending.title : 'Loading...';
+    memesCount.textContent = stats.totalMemes;
+    categoriesCount.textContent = stats.categories.length;
+}
+
+// Refresh trending memes
+refreshTrendingBtn.addEventListener('click', () => {
+    refreshTrendingBtn.classList.add('spinning');
+    setTimeout(() => {
+        displayTrendingMemes();
+        updateTrendingStats();
+        refreshTrendingBtn.classList.remove('spinning');
+    }, 500);
+});
+
+// Auto-play trending memes
+autoPlayBtn.addEventListener('click', () => {
+    isAutoPlaying = !isAutoPlaying;
+    
+    if (isAutoPlaying) {
+        autoPlayBtn.classList.add('active');
+        autoPlayBtn.innerHTML = '<i class="fas fa-pause"></i> <span data-en="Stop" data-ne="रोक्नुहोस्">Stop</span>';
+        
+        autoPlayInterval = setInterval(() => {
+            displayTrendingMemes();
+            updateTrendingStats();
+        }, 5000);
+    } else {
+        autoPlayBtn.classList.remove('active');
+        autoPlayBtn.innerHTML = '<i class="fas fa-play"></i> <span data-en="Auto Play" data-ne="स्वचालित खेल">Auto Play</span>';
+        clearInterval(autoPlayInterval);
+    }
+});
+
+// Update trending display when language changes
+document.addEventListener('languageChanged', () => {
+    displayTrendingMemes();
+    updateTrendingStats();
+});
+
+// Add CSS for trending section animations
+const style = document.createElement('style');
+style.textContent = `
+    .trending-meme-card {
+        animation: slideInUp 0.5s ease-out forwards;
+    }
+    
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .spinning {
+        animation: spin 0.6s linear !important;
+    }
+    
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+    
+    .btn-small {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+        border: none;
+        background: var(--accent);
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+    
+    .btn-small:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+    }
+`;
+document.head.appendChild(style);

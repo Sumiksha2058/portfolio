@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meme Creator - Sumiksha's Fun Zone</title>
+    <title>Trending AI Meme Hub - Sumiksha's Fun Zone</title>
     <link rel="stylesheet" href="../../styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -31,24 +31,59 @@
 
     <!-- Language Switcher -->
     <div class="language-switcher">
-        <button class="lang-btn active" data-lang="en"><i class="fas fa-globe"></i> English</button>
-        <button class="lang-btn" data-lang="ne"><i class="fas fa-globe"></i> नेपाली</button>
+        <button class="lang-btn active" data-lang="en"><i class="fas fa-globe"></i> <span>English</span></button>
+        <button class="lang-btn" data-lang="ne"><i class="fas fa-globe"></i> <span>नेपाली</span></button>
     </div>
 
     <!-- Main Content -->
     <section class="meme-creator-section">
         <div class="container">
-            <h1 class="page-title"><i class="fas fa-laugh-squint"></i> <span data-en="AI Meme Creator" data-ne="नेपाली मेम क्रिएटर">AI Meme Creator</span></h1>
-            <p class="page-subtitle" data-en="Create hilarious memes with AI-generated text, emojis, and GIFs!" data-ne="AI द्वारा उत्पन्न पाठ, इमोजी र GIF को साथ हास्य मेम बनाउनुहोस्!">Create hilarious memes with AI-generated text, emojis, and GIFs!</p>
+            <h1 class="page-title"><i class="fas fa-fire"></i> <span data-en="Trending AI Meme Hub" data-ne="ट्रेन्डिङ एआई मेम हब">Trending AI Meme Hub</span></h1>
+            <p class="page-subtitle" data-en="AI automatically generates memes based on trending topics and social media!" data-ne="एआई स्वचालित रूपमा ट्रेन्डिङ विषय र सोशल मिडिया आधारित मेम बनाता है!">AI automatically generates memes based on trending topics and social media!</p>
 
-            <!-- Category Filter -->
+            <!-- Trending Memes Display Section -->
+            <div class="trending-section">
+                <div class="trending-header">
+                    <h2><i class="fas fa-chart-line"></i> <span data-en="Trending Now" data-ne="अहिले ट्रेन्डिङ">Trending Now</span></h2>
+                    <div class="trending-controls">
+                        <button class="refresh-btn" id="refreshTrendingBtn"><i class="fas fa-sync-alt"></i> <span data-en="Refresh" data-ne="रिफ्रेश">Refresh</span></button>
+                        <button class="auto-play-btn" id="autoPlayBtn"><i class="fas fa-play"></i> <span data-en="Auto Play" data-ne="स्वचालित खेल">Auto Play</span></button>
+                    </div>
+                </div>
+
+                <!-- Trending Memes Grid -->
+                <div class="trending-memes-grid" id="trendingMemesGrid">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner"></i>
+                        <p data-en="Generating trending memes..." data-ne="ट्रेन्डिङ मेम बनाइँदै...">Generating trending memes...</p>
+                    </div>
+                </div>
+
+                <!-- Trending Stats -->
+                <div class="trending-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-fire"></i>
+                        <span data-en="Top Trend" data-ne="शीर्ष ट्रेन्ड">Top Trend</span>: <span id="topTrendName">-</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-images"></i>
+                        <span data-en="Memes Generated" data-ne="मेम बनाए गए">Memes Generated</span>: <span id="memesCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-categories"></i>
+                        <span data-en="Categories" data-ne="श्रेणियाँ">Categories</span>: <span id="categoriesCount">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category Filter for Manual Creation -->
             <div class="category-filter">
-                <h3><i class="fas fa-filter"></i> <span data-en="Select Meme Category" data-ne="मेम क्याटेगरी छान्नुहोस्">Select Meme Category</span></h3>
+                <h3><i class="fas fa-filter"></i> <span data-en="Or Create Your Own" data-ne="वा आफ्नो बनाउनुहोस्">Or Create Your Own</span></h3>
                 <div class="category-buttons">
                     <button class="category-btn active" data-category="general"><i class="fas fa-laugh"></i> <span data-en="General" data-ne="सामान्य">General</span></button>
                     <button class="category-btn" data-category="politics"><i class="fas fa-landmark"></i> <span data-en="Politics" data-ne="राजनीति">Politics</span></button>
                     <button class="category-btn" data-category="celebrity"><i class="fas fa-star"></i> <span data-en="Celebrity" data-ne="सेलिब्रिटी">Celebrity</span></button>
-                    <button class="category-btn" data-category="sports"><i class="fas fa-football-ball"></i> <span data-en="Sports" data-ne="खेलकुद">Sports</span></button>
+                    <button class="category-btn" data-category="sports"><i class="fas fa-basketball"></i> <span data-en="Sports" data-ne="खेल">Sports</span></button>
                     <button class="category-btn" data-category="tech"><i class="fas fa-laptop"></i> <span data-en="Tech" data-ne="प्रविधि">Tech</span></button>
                     <button class="category-btn" data-category="education"><i class="fas fa-graduation-cap"></i> <span data-en="Education" data-ne="शिक्षा">Education</span></button>
                     <button class="category-btn" data-category="relationship"><i class="fas fa-heart"></i> <span data-en="Relationship" data-ne="सम्बन्ध">Relationship</span></button>
@@ -58,25 +93,15 @@
                 </div>
             </div>
 
+            <!-- Meme Container -->
             <div class="meme-container">
                 <!-- Input Panel -->
                 <div class="input-panel">
-                    <h2><i class="fas fa-pen-fancy"></i> <span data-en="Meme Generator" data-ne="मेम जेनरेटर">Meme Generator</span></h2>
-                    
-                    <div class="form-group">
-                        <label for="topText"><i class="fas fa-heading"></i> <span data-en="Top Text" data-ne="माथिको पाठ">Top Text</span></label>
-                        <input type="text" id="topText" placeholder="Enter top text..." data-placeholder-en="Enter top text..." data-placeholder-ne="माथिको पाठ लेख्नुहोस्..." maxlength="100">
-                        <small data-en="Max 100 characters" data-ne="अधिकतम १०० वर्ण">Max 100 characters</small>
-                    </div>
+                    <h2><i class="fas fa-edit"></i> <span data-en="Customize Meme" data-ne="मेम अनुकूलित गर्नुहोस्">Customize Meme</span></h2>
 
+                    <!-- Meme Template Selection -->
                     <div class="form-group">
-                        <label for="bottomText"><i class="fas fa-heading"></i> <span data-en="Bottom Text" data-ne="तलको पाठ">Bottom Text</span></label>
-                        <input type="text" id="bottomText" placeholder="Enter bottom text..." data-placeholder-en="Enter bottom text..." data-placeholder-ne="तलको पाठ लेख्नुहोस्..." maxlength="100">
-                        <small data-en="Max 100 characters" data-ne="अधिकतम १०० वर्ण">Max 100 characters</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="memeTemplate"><i class="fas fa-image"></i> <span data-en="Meme Template" data-ne="मेम टेम्प्लेट">Meme Template</span></label>
+                        <label data-en="Meme Template" data-ne="मेम टेम्पलेट">Meme Template</label>
                         <select id="memeTemplate">
                             <option value="drake" data-en="Drake Meme" data-ne="ड्रेक मेम">Drake Meme</option>
                             <option value="distracted" data-en="Distracted Boyfriend" data-ne="विचलित प्रेमी">Distracted Boyfriend</option>
@@ -86,96 +111,98 @@
                         </select>
                     </div>
 
+                    <!-- Top Text -->
                     <div class="form-group">
-                        <label for="emojiInput"><i class="fas fa-smile"></i> <span data-en="Add Emojis" data-ne="इमोजी थप्नुहोस्">Add Emojis</span></label>
+                        <label data-en="Top Text" data-ne="शीर्ष पाठ">Top Text</label>
+                        <input type="text" id="topText" placeholder="Enter top text...">
+                    </div>
+
+                    <!-- Bottom Text -->
+                    <div class="form-group">
+                        <label data-en="Bottom Text" data-ne="तल पाठ">Bottom Text</label>
+                        <input type="text" id="bottomText" placeholder="Enter bottom text...">
+                    </div>
+
+                    <!-- Emoji Picker -->
+                    <div class="form-group">
+                        <label data-en="Add Emoji" data-ne="इमोजी थप्नुहोस्">Add Emoji</label>
                         <div class="emoji-picker">
-                            <button type="button" class="emoji-btn" data-emoji="😂">😂</button>
-                            <button type="button" class="emoji-btn" data-emoji="🤣">🤣</button>
-                            <button type="button" class="emoji-btn" data-emoji="😆">😆</button>
-                            <button type="button" class="emoji-btn" data-emoji="😅">😅</button>
-                            <button type="button" class="emoji-btn" data-emoji="🤪">🤪</button>
-                            <button type="button" class="emoji-btn" data-emoji="😎">😎</button>
-                            <button type="button" class="emoji-btn" data-emoji="🔥">🔥</button>
-                            <button type="button" class="emoji-btn" data-emoji="💯">💯</button>
-                            <button type="button" class="emoji-btn" data-emoji="🎉">🎉</button>
-                            <button type="button" class="emoji-btn" data-emoji="🚀">🚀</button>
-                            <button type="button" class="emoji-btn" data-emoji="👍">👍</button>
-                            <button type="button" class="emoji-btn" data-emoji="💪">💪</button>
-                            <button type="button" class="emoji-btn" data-emoji="🙏">🙏</button>
-                            <button type="button" class="emoji-btn" data-emoji="😤">😤</button>
-                            <button type="button" class="emoji-btn" data-emoji="🤦">🤦</button>
-                            <button type="button" class="emoji-btn" data-emoji="😭">😭</button>
+                            <button class="emoji-btn" data-emoji="😂">😂</button>
+                            <button class="emoji-btn" data-emoji="🤣">🤣</button>
+                            <button class="emoji-btn" data-emoji="😎">😎</button>
+                            <button class="emoji-btn" data-emoji="🔥">🔥</button>
+                            <button class="emoji-btn" data-emoji="💯">💯</button>
+                            <button class="emoji-btn" data-emoji="👍">👍</button>
+                            <button class="emoji-btn" data-emoji="🎯">🎯</button>
+                            <button class="emoji-btn" data-emoji="💪">💪</button>
+                            <button class="emoji-btn" data-emoji="🚀">🚀</button>
+                            <button class="emoji-btn" data-emoji="⚡">⚡</button>
+                            <button class="emoji-btn" data-emoji="🎉">🎉</button>
+                            <button class="emoji-btn" data-emoji="😱">😱</button>
                         </div>
                     </div>
 
+                    <!-- Customization Options -->
                     <div class="form-group">
-                        <label for="gifUrl"><i class="fas fa-film"></i> <span data-en="Add GIF URL" data-ne="GIF URL थप्नुहोस्">Add GIF URL</span></label>
-                        <input type="text" id="gifUrl" placeholder="Paste GIF URL from Giphy..." data-placeholder-en="Paste GIF URL from Giphy..." data-placeholder-ne="Giphy.com बाट GIF URL पेस्ट गर्नुहोस्...">
-                        <small data-en="Use Giphy.com to find GIFs" data-ne="Giphy.com मा GIF खोज्नुहोस्">Use Giphy.com to find GIFs</small>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="backgroundColor"><i class="fas fa-palette"></i> <span data-en="Background Color" data-ne="पृष्ठभूमि रंग">Background Color</span></label>
+                        <label data-en="Background Color" data-ne="पृष्ठभूमि रंग">Background Color</label>
                         <input type="color" id="backgroundColor" value="#ffffff">
                     </div>
 
                     <div class="form-group">
-                        <label for="textColor"><i class="fas fa-font"></i> <span data-en="Text Color" data-ne="पाठ रंग">Text Color</span></label>
+                        <label data-en="Text Color" data-ne="पाठ रंग">Text Color</label>
                         <input type="color" id="textColor" value="#000000">
                     </div>
 
                     <div class="form-group">
-                        <label for="fontSize"><i class="fas fa-text-height"></i> <span data-en="Font Size" data-ne="फन्ट साइज">Font Size</span></label>
+                        <label data-en="Font Size" data-ne="फन्ट आकार">Font Size: <span id="fontSizeValue">24</span>px</label>
                         <input type="range" id="fontSize" min="12" max="48" value="24">
-                        <small data-en="Current:" data-ne="वर्तमान:">Current: <span id="fontSizeValue">24</span>px</small>
                     </div>
 
+                    <!-- Action Buttons -->
                     <div class="button-group">
-                        <button id="generateBtn" class="btn btn-primary"><i class="fas fa-magic"></i> <span data-en="Generate Meme" data-ne="मेम बनाउनुहोस्">Generate Meme</span></button>
-                        <button id="resetBtn" class="btn btn-secondary"><i class="fas fa-redo"></i> <span data-en="Reset" data-ne="रिसेट गर्नुहोस्">Reset</span></button>
+                        <button class="btn btn-primary" id="generateBtn"><i class="fas fa-magic"></i> <span data-en="Generate" data-ne="बनाउनुहोस्">Generate</span></button>
+                        <button class="btn btn-secondary" id="resetBtn"><i class="fas fa-redo"></i> <span data-en="Reset" data-ne="रिसेट">Reset</span></button>
                     </div>
                 </div>
 
                 <!-- Preview Panel -->
                 <div class="preview-panel">
-                    <h2><i class="fas fa-eye"></i> <span data-en="Preview" data-ne="पूर्वावलोकन">Preview</span></h2>
-                    <div id="memePreview" class="meme-preview">
+                    <h2><i class="fas fa-image"></i> <span data-en="Meme Preview" data-ne="मेम पूर्वावलोकन">Meme Preview</span></h2>
+                    <div class="meme-preview" id="memePreview">
                         <div class="meme-placeholder">
                             <i class="fas fa-image"></i>
                             <p data-en="Your meme will appear here" data-ne="तपाईंको मेम यहाँ देखिनेछ">Your meme will appear here</p>
                         </div>
                     </div>
 
+                    <!-- Action Buttons -->
                     <div class="action-buttons">
-                        <button id="downloadBtn" class="btn btn-primary" disabled><i class="fas fa-download"></i> <span data-en="Download" data-ne="डाउनलोड गर्नुहोस्">Download</span></button>
-                        <button id="shareBtn" class="btn btn-secondary" disabled><i class="fas fa-share-alt"></i> <span data-en="Share" data-ne="साझेदारी गर्नुहोस्">Share</span></button>
-                        <button id="copyBtn" class="btn btn-secondary" disabled><i class="fas fa-copy"></i> <span data-en="Copy" data-ne="कपी गर्नुहोस्">Copy</span></button>
+                        <button class="btn btn-success" id="downloadBtn" disabled><i class="fas fa-download"></i> <span data-en="Download" data-ne="डाउनलोड">Download</span></button>
+                        <button class="btn btn-info" id="copyBtn" disabled><i class="fas fa-copy"></i> <span data-en="Copy" data-ne="कपी">Copy</span></button>
+                        <button class="btn btn-warning" id="shareBtn" disabled><i class="fas fa-share"></i> <span data-en="Share" data-ne="साझा गर्नुहोस्">Share</span></button>
                     </div>
 
-                    <div id="aiSuggestions" class="ai-suggestions">
-                        <h3><i class="fas fa-lightbulb"></i> <span data-en="AI Suggestions" data-ne="AI सुझाव">AI Suggestions</span></h3>
-                        <div id="suggestionsList" class="suggestions-list">
-                            <p data-en="Fill in the form to get AI suggestions!" data-ne="मेम बनाउन फारम भर्नुहोस्!">Fill in the form to get AI suggestions!</p>
-                        </div>
+                    <!-- AI Suggestions -->
+                    <div class="ai-suggestions">
+                        <h3><i class="fas fa-lightbulb"></i> <span data-en="AI Suggestions" data-ne="एआई सुझाव">AI Suggestions</span></h3>
+                        <div class="suggestions-list" id="suggestionsList"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Suggestions Section -->
+            <!-- Quick Suggestions -->
             <div class="quick-suggestions">
-                <h2><i class="fas fa-fire"></i> <span data-en="Popular Meme Lines" data-ne="लोकप्रिय मेम लाइनहरू">Popular Meme Lines</span></h2>
-                <div class="suggestions-grid" id="suggestionsGrid">
-                    <!-- Populated by JavaScript -->
-                </div>
+                <h2><i class="fas fa-star"></i> <span data-en="Quick Trending Ideas" data-ne="द्रुत ट्रेन्डिङ विचार">Quick Trending Ideas</span></h2>
+                <div class="suggestions-grid" id="suggestionsGrid"></div>
             </div>
 
             <!-- Gallery Section -->
             <div class="gallery-section">
-                <h2><i class="fas fa-images"></i> <span data-en="Meme Gallery" data-ne="मेम ग्यालरी">Meme Gallery</span></h2>
+                <h2><i class="fas fa-gallery"></i> <span data-en="Your Meme Gallery" data-ne="तपाईंको मेम ग्यालरी">Your Meme Gallery</span></h2>
                 <div class="gallery-controls">
-                    <button id="clearGalleryBtn" class="btn btn-secondary"><i class="fas fa-trash"></i> <span data-en="Clear Gallery" data-ne="ग्यालरी खाली गर्नुहोस्">Clear Gallery</span></button>
+                    <button class="btn btn-danger" id="clearGalleryBtn"><i class="fas fa-trash"></i> <span data-en="Clear All" data-ne="सबै हटाउनुहोस्">Clear All</span></button>
                 </div>
-                <div id="memeGallery" class="meme-gallery">
+                <div class="meme-gallery" id="memeGallery">
                     <div class="gallery-placeholder">
                         <p data-en="Your created memes will appear here" data-ne="तपाईंले बनाएका मेमहरू यहाँ देखिनेछन्">Your created memes will appear here</p>
                     </div>
@@ -184,66 +211,36 @@
 
             <!-- Tips Section -->
             <div class="tips-section">
-                <h2><i class="fas fa-lightbulb"></i> <span data-en="Meme Creation Tips" data-ne="मेम बनाउने सुझाव">Meme Creation Tips</span></h2>
+                <h2><i class="fas fa-lightbulb"></i> <span data-en="Tips for Better Memes" data-ne="राम्रो मेमको लागि सुझाव">Tips for Better Memes</span></h2>
                 <div class="tips-grid">
                     <div class="tip-card">
-                        <i class="fas fa-check-circle"></i>
-                        <h4 data-en="Simple & Clear Text" data-ne="सरल र स्पष्ट पाठ">Simple & Clear Text</h4>
-                        <p data-en="Short and impactful text works best." data-ne="छोटो र प्रभावशाली पाठ सबैभन्दा राम्रो काम गर्छ।">Short and impactful text works best.</p>
+                        <i class="fas fa-brain"></i>
+                        <h4 data-en="Be Relatable" data-ne="सम्बन्धित हुनुहोस्">Be Relatable</h4>
+                        <p data-en="Create memes about shared experiences and current trends." data-ne="साझा अनुभव र वर्तमान ट्रेन्ड के बारे में मेम बनाएं।">Create memes about shared experiences and current trends.</p>
                     </div>
                     <div class="tip-card">
-                        <i class="fas fa-check-circle"></i>
-                        <h4 data-en="Choose Right Template" data-ne="सही टेम्प्लेट छान्नुहोस्">Choose Right Template</h4>
-                        <p data-en="Use templates that match your humor style." data-ne="आपनो हास्य शैलीसँग मिल्ने टेम्प्लेट प्रयोग गर्नुहोस्।">Use templates that match your humor style.</p>
+                        <i class="fas fa-font"></i>
+                        <h4 data-en="Keep Text Short" data-ne="पाठ छोटो राख्नुहोस्">Keep Text Short</h4>
+                        <p data-en="Use concise, punchy text that's easy to read quickly." data-ne="संक्षिप्त, प्रभावशाली पाठ का उपयोग करें जो जल्दी पढ़ने में आसान हो।">Use concise, punchy text that's easy to read quickly.</p>
                     </div>
                     <div class="tip-card">
-                        <i class="fas fa-check-circle"></i>
-                        <h4 data-en="Add Emojis" data-ne="इमोजी जोड्नुहोस्">Add Emojis</h4>
-                        <p data-en="Emojis can enhance the meme's impact." data-ne="इमोजीले मेमको प्रभाव बढाउन सक्छ।">Emojis can enhance the meme's impact.</p>
+                        <i class="fas fa-palette"></i>
+                        <h4 data-en="Use Contrast" data-ne="विपरीत प्रयोग गर्नुहोस्">Use Contrast</h4>
+                        <p data-en="Choose colors that make your text stand out from the background." data-ne="ऐसे रंग चुनें जो आपके पाठ को पृष्ठभूमि से अलग करें।">Choose colors that make your text stand out from the background.</p>
                     </div>
                     <div class="tip-card">
-                        <i class="fas fa-check-circle"></i>
-                        <h4 data-en="Color Harmony" data-ne="रंग संयोजन">Color Harmony</h4>
-                        <p data-en="Keep text and background colors coordinated." data-ne="पाठ र पृष्ठभूमि रंग सुसंगत राख्नुहोस्।">Keep text and background colors coordinated.</p>
+                        <i class="fas fa-share-alt"></i>
+                        <h4 data-en="Share & Engage" data-ne="साझा गर्नुहोस् र संलग्न हुनुहोस्">Share & Engage</h4>
+                        <p data-en="Share your memes on social media and engage with your audience." data-ne="अपने मेम को सोशल मीडिया पर साझा करें और अपने दर्शकों के साथ जुड़ें।">Share your memes on social media and engage with your audience.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <h3><i class="fas fa-code"></i> Sumiksha Neupane</h3>
-                    <p data-en="BCA Student & Web Developer" data-ne="BCA विद्यार्थी र वेब डेभलपर">BCA Student & Web Developer</p>
-                </div>
-                <div class="footer-links">
-                    <h4 data-en="Quick Links" data-ne="द्रुत लिङ्क">Quick Links</h4>
-                    <ul>
-                        <li><a href="../../index.html#home" data-en="Home" data-ne="गृह">Home</a></li>
-                        <li><a href="../../index.html#about" data-en="About" data-ne="बारे">About</a></li>
-                        <li><a href="../index.html" data-en="Fun Zone" data-ne="मजेदार जोन">Fun Zone</a></li>
-                        <li><a href="../../blog/index.html" data-en="Blog" data-ne="ब्लग">Blog</a></li>
-                    </ul>
-                </div>
-                <div class="footer-social">
-                    <h4 data-en="Connect With Me" data-ne="मसँग जोडिनुहोस्">Connect With Me</h4>
-                    <div class="social-icons">
-                        <a href="https://github.com/Sumiksha2058" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/sumiksha-neupane2058" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p data-en="All rights reserved." data-ne="सबै अधिकार सुरक्षित।">&copy; <script>document.write(new Date().getFullYear());</script> Sumiksha Neupane. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script src="../../script.js"></script>
-    <script src="lang.js"></script>
+    <!-- Scripts -->
+    <script src="../../lang.js"></script>
+    <script src="trending-ai.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
