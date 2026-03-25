@@ -48,7 +48,7 @@
 
         .back-btn {
             display: inline-block;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             padding: 10px 20px;
             background: var(--bg-secondary);
             color: var(--accent);
@@ -73,9 +73,20 @@
 
         .subtitle {
             color: var(--text-secondary);
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             font-size: 1.1rem;
             font-weight: 500;
+        }
+
+        .instructions {
+            background: var(--bg-primary);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            box-shadow: var(--shadow-inset);
+            line-height: 1.4;
         }
 
         .stats-bar {
@@ -111,7 +122,7 @@
             color: var(--accent);
             border-radius: 20px;
             border: none;
-            cursor: pointer;
+            cursor: default;
             box-shadow: var(--shadow-sm);
             transition: all 0.3s ease;
             display: flex;
@@ -122,7 +133,6 @@
         .number-btn.hidden {
             box-shadow: var(--shadow-inset);
             color: transparent;
-            cursor: default;
         }
 
         .input-group { margin-bottom: 25px; }
@@ -141,6 +151,16 @@
             color: var(--accent);
             letter-spacing: 5px;
             outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            box-shadow: inset 3px 3px 6px #b8b9be, inset -4px -4px 8px #ffffff;
+        }
+
+        input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
 
         .controls {
@@ -160,6 +180,7 @@
             align-items: center;
             justify-content: center;
             gap: 0.5rem;
+            font-size: 1rem;
         }
 
         .btn-primary {
@@ -177,16 +198,22 @@
             box-shadow: var(--shadow-sm);
         }
 
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
         .overlay {
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(224, 229, 236, 0.8);
+            background: rgba(224, 229, 236, 0.9);
             backdrop-filter: blur(5px);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 10;
             border-radius: 20px;
+            transition: opacity 0.3s ease;
         }
 
         .message {
@@ -195,28 +222,38 @@
             border-radius: 15px;
             font-weight: 700;
             display: none;
+            animation: fadeIn 0.5s ease;
         }
 
-        .message.success { display: block; color: #38a169; box-shadow: var(--shadow-sm); }
-        .message.error { display: block; color: #e53e3e; box-shadow: var(--shadow-sm); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.success { display: block; color: #38a169; background: rgba(56, 161, 105, 0.1); box-shadow: var(--shadow-sm); }
+        .message.error { display: block; color: #e53e3e; background: rgba(229, 62, 62, 0.1); box-shadow: var(--shadow-sm); }
 
         .hidden-element { display: none !important; }
     </style>
 </head>
 <body>
     <div class="container">
-        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back</a>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Fun Zone</a>
         
         <h1>Memory Game</h1>
         <p class="subtitle">Test your brain power</p>
 
+        <div class="instructions" id="instructionBox">
+            Memorize the numbers in the grid. You have 3 seconds before they disappear!
+        </div>
+
         <div class="stats-bar">
             <div class="stat-item">
-                <span class="stat-label">Progress</span>
+                <span class="stat-label">Correct</span>
                 <span class="stat-value" id="progress">0/9</span>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Time</span>
+                <span class="stat-label">Time Taken</span>
                 <span class="stat-value" id="timer">0.0s</span>
             </div>
         </div>
@@ -231,7 +268,7 @@
         </div>
 
         <div class="input-group">
-            <label for="userInput">Recall the sequence:</label>
+            <label for="userInput">Enter the sequence (reading row by row):</label>
             <input type="text" id="userInput" placeholder="---------" maxlength="9" autocomplete="off" disabled>
         </div>
 
@@ -245,23 +282,14 @@
 
     <!-- Audio Elements -->
     <audio id="clickSound" src="../assets/sounds/click.mp3"></audio>
-    <audio id="matchSound" src="../assets/sounds/match.mp3"></audio>
     <audio id="winSound" src="../assets/sounds/win.mp3"></audio>
     <audio id="lossSound" src="../assets/sounds/loss.mp3"></audio>
 
     <script>
         let numbers = [];
         let gameActive = false;
-
-        // Sound effect function
-        function playSound(soundId) {
-            const sound = document.getElementById(soundId);
-            if (sound) {
-                sound.currentTime = 0;
-                sound.play().catch(e => console.log('Sound play failed:', e));
-            }
-        }    let timerInterval;
-        let gameActive = false;
+        let timerInterval;
+        let startTime;
 
         const gameGrid = document.getElementById('gameGrid');
         const progressEl = document.getElementById('progress');
@@ -270,19 +298,34 @@
         const checkBtn = document.getElementById('checkBtn');
         const messageEl = document.getElementById('message');
         const startOverlay = document.getElementById('startOverlay');
+        const instructionBox = document.getElementById('instructionBox');
 
         function initGrid() {
             gameGrid.innerHTML = '';
             for (let i = 0; i < 9; i++) {
                 const div = document.createElement('div');
                 div.className = 'number-btn hidden';
+                div.textContent = '?';
                 gameGrid.appendChild(div);
+            }
+        }
+
+        function playSound(soundId) {
+            const sound = document.getElementById(soundId);
+            if (sound) {
+                sound.currentTime = 0;
+                sound.play().catch(e => console.log('Sound play failed:', e));
             }
         }
 
         function startGame() {
             playSound('clickSound');
             startOverlay.classList.add('hidden-element');
+            messageEl.style.display = 'none';
+            userInput.value = '';
+            userInput.disabled = true;
+            checkBtn.disabled = true;
+            
             gameActive = true;
             numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9].sort(() => Math.random() - 0.5);
             
@@ -294,45 +337,70 @@
                 gameGrid.appendChild(btn);
             });
 
-            startTime = Date.now();
-            timerInterval = setInterval(() => {
-                timerEl.textContent = ((Date.now() - startTime) / 1000).toFixed(1) + 's';
-            }, 100);
+            instructionBox.textContent = "Memorize the sequence now! 3 seconds remaining...";
+            instructionBox.style.color = "var(--accent)";
+
+            let countdown = 3;
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    instructionBox.textContent = `Memorize the sequence now! ${countdown} seconds remaining...`;
+                } else {
+                    clearInterval(countdownInterval);
+                }
+            }, 1000);
 
             setTimeout(() => {
                 document.querySelectorAll('.number-btn').forEach(btn => btn.classList.add('hidden'));
                 userInput.disabled = false;
                 checkBtn.disabled = false;
                 userInput.focus();
+                instructionBox.textContent = "Now, type the sequence you saw (reading left-to-right, row-by-row).";
+                instructionBox.style.color = "var(--text-secondary)";
+                
+                startTime = Date.now();
+                timerInterval = setInterval(() => {
+                    timerEl.textContent = ((Date.now() - startTime) / 1000).toFixed(1) + 's';
+                }, 100);
             }, 3000);
         }
 
         function checkAnswer() {
-            const answer = userInput.value;
+            const answer = userInput.value.trim();
             const correctAnswer = numbers.join('');
             
+            if (answer.length === 0) {
+                alert("Please enter the sequence first!");
+                return;
+            }
+
             clearInterval(timerInterval);
             gameActive = false;
             userInput.disabled = true;
             checkBtn.disabled = true;
 
+            let correctCount = 0;
+            for(let i = 0; i < Math.min(answer.length, correctAnswer.length); i++) {
+                if(answer[i] === correctAnswer[i]) correctCount++;
+            }
+
             if (answer === correctAnswer) {
                 playSound('winSound');
-                messageEl.textContent = "🎉 Perfect! Your memory is amazing!";
+                messageEl.textContent = "🎉 Perfect! Your memory is exceptional!";
                 messageEl.className = "message success";
                 progressEl.textContent = "9/9";
             } else {
                 playSound('lossSound');
-                let correctCount = 0;
-                for(let i=0; i<answer.length; i++) {
-                    if(answer[i] === correctAnswer[i]) correctCount++;
-                }
-                messageEl.textContent = `😢 Not quite. You got ${correctCount} correct.`;
+                messageEl.textContent = `😢 Not quite. You got ${correctCount} out of 9 correct. Correct sequence was: ${correctAnswer}`;
                 messageEl.className = "message error";
                 progressEl.textContent = `${correctCount}/9`;
             }
             
-            document.querySelectorAll('.number-btn').forEach(btn => btn.classList.remove('hidden'));
+            messageEl.style.display = 'block';
+            document.querySelectorAll('.number-btn').forEach((btn, index) => {
+                btn.classList.remove('hidden');
+                btn.style.color = (answer[index] === correctAnswer[index]) ? "#38a169" : "#e53e3e";
+            });
         }
 
         function resetGame() {
@@ -345,8 +413,17 @@
             progressEl.textContent = '0/9';
             messageEl.style.display = 'none';
             startOverlay.classList.remove('hidden-element');
+            instructionBox.textContent = "Memorize the numbers in the grid. You have 3 seconds before they disappear!";
+            instructionBox.style.color = "var(--text-secondary)";
             initGrid();
         }
+
+        // Allow pressing Enter to check answer
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !checkBtn.disabled) {
+                checkAnswer();
+            }
+        });
 
         initGrid();
     </script>
