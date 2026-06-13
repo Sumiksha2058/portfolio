@@ -531,8 +531,17 @@
                 return;
             }
 
+            // Sort matches by date
+            filteredMatches.sort((a, b) => {
+                const dateA = new Date(a.local_date);
+                const dateB = new Date(b.local_date);
+                return dateA - dateB;
+            });
+
             // Group by stage
             const grouped = {};
+            const groupOrder = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'R16', 'QF', 'SF', '3RD', 'F'];
+            
             filteredMatches.forEach(match => {
                 if (!grouped[match.group]) {
                     grouped[match.group] = [];
@@ -540,25 +549,37 @@
                 grouped[match.group].push(match);
             });
 
-            // Display groups
-            Object.keys(grouped).sort().forEach(group => {
-                const groupSection = document.createElement('div');
-                groupSection.className = 'group-section';
-                
-                const groupTitle = document.createElement('div');
-                groupTitle.className = 'group-title';
-                groupTitle.textContent = `Group ${group}`;
-                groupSection.appendChild(groupTitle);
+            // Display groups in order
+            groupOrder.forEach(group => {
+                if (grouped[group]) {
+                    const groupSection = document.createElement('div');
+                    groupSection.className = 'group-section';
+                    
+                    const groupTitle = document.createElement('div');
+                    groupTitle.className = 'group-title';
+                    
+                    // Format group title
+                    let displayName = group;
+                    if (group === 'R16') displayName = 'Round of 16';
+                    else if (group === 'QF') displayName = 'Quarter Finals';
+                    else if (group === 'SF') displayName = 'Semi Finals';
+                    else if (group === '3RD') displayName = '3rd Place';
+                    else if (group === 'F') displayName = 'Final';
+                    else displayName = `Group ${group}`;
+                    
+                    groupTitle.textContent = displayName;
+                    groupSection.appendChild(groupTitle);
 
-                const matchesGrid = document.createElement('div');
-                matchesGrid.className = 'matches-grid';
-                
-                grouped[group].forEach(match => {
-                    matchesGrid.appendChild(createMatchCard(match));
-                });
+                    const matchesGrid = document.createElement('div');
+                    matchesGrid.className = 'matches-grid';
+                    
+                    grouped[group].forEach(match => {
+                        matchesGrid.appendChild(createMatchCard(match));
+                    });
 
-                groupSection.appendChild(matchesGrid);
-                container.appendChild(groupSection);
+                    groupSection.appendChild(matchesGrid);
+                    container.appendChild(groupSection);
+                }
             });
         }
 
